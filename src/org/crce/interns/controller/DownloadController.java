@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,15 +15,20 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-
+import org.crce.interns.beans.ApplicantCSVBean;
 import org.crce.interns.beans.DirectoryPathBean;
+import org.crce.interns.service.CSVFileGenerator;
 import org.crce.interns.service.CheckRoleService;
+import org.crce.interns.service.ManageApplicantsService;
+import org.crce.interns.service.SCSVFileGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,6 +44,16 @@ public class DownloadController extends HttpServlet {
 
 	@Autowired
 	private CheckRoleService crService;
+	
+	@Autowired
+	private CSVFileGenerator csvService;
+	
+	@Autowired
+	private SCSVFileGenerator scsvService;
+		
+	@Autowired
+	private ManageApplicantsService crudService;
+	
 	/*
 	 * The base path would be the root directory of all the folders the year
 	 * field will be added soon so final basePath would look like PMS/year
@@ -356,7 +372,277 @@ public class DownloadController extends HttpServlet {
 	}
 
 	@RequestMapping("/downloads")
-	public String StudentNotification() {
-		return "facultyDownloads";
+	public ModelAndView StudentNotification(HttpServletRequest request) {
+		
+		HttpSession session=request.getSession();
+		 String roleId=(String)session.getAttribute("roleId");
+			
+			//new authorization
+			if(!crService.checkRole("/downloads", roleId))
+				return new ModelAndView("403");
+			else{
+					return new ModelAndView("facultyDownloads");
+			}
+	}
+	
+	
+	@RequestMapping(value = "/csvform", method = RequestMethod.GET)
+	public ModelAndView testCSVForm() {
+		return new ModelAndView("testCSV");
+	}
+	
+	@RequestMapping(value = "/testCSV", method = RequestMethod.GET)
+
+	public void testCSV(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			
+			//profileService.listProfessionalProfile("2016");
+			ApplicantCSVBean a = new ApplicantCSVBean(); 
+			
+			
+			//a.setBranch(true);
+			//a.setMobileNo(true);
+			
+			//String company = "JP Morgan";
+			//String year = "2016";
+			String[] columns = request.getParameterValues("columns");
+			
+			for(String i:columns){
+				switch(i){
+				
+				case "BRANCH":
+					a.setBranch(true);
+					break;
+					
+				case "EMAIL":
+					a.setEmailId(true);
+					break;
+					
+				case "CONTACT":
+					a.setMobileNo(true);
+					break;
+					
+				case "SSC":
+					a.setSsc_per(true);
+					break;
+					
+				case "HSC":
+					a.setHscOrDip(true);
+					break;
+					
+				case "CGPA":
+					a.setDeg(true);
+					break;
+					
+				case "CORRESPONDENCE ADDRESS":
+					a.setCorrespondenceAddress(true);
+					break;
+					
+				default:
+					System.out.println("NO MATCH");
+					break;
+				}
+			}
+			
+			String company = request.getParameter("companyname");			
+			String year = request.getParameter("year");
+			
+			
+			System.out.println(" >"+a.getBranch()+" ->"+company);
+			
+			
+			csvService.generateCSV(
+					a,
+					new LinkedList<List<String>>(),
+					crudService.retreiveDetails(company, year));
+			
+			
+	        
+			ServletContext context = request.getServletContext();
+
+			File downloadFile = new File(csvService.download());
+			FileInputStream inputStream = null;
+			try {
+				inputStream = new FileInputStream(downloadFile);
+			} catch (FileNotFoundException e) {
+				//e.printStackTrace();
+	                        logger.error(e);
+			}
+			String mimeType = context.getMimeType(csvService.download());
+			
+			//System.out.println(mimeType);
+			
+			if (mimeType == null) {
+				mimeType = "application/octet-stream";
+			}
+			
+			String downloadFileName = downloadFile.getName();
+			//String ext = downloadFileName.substring(downloadFileName.lastIndexOf("."));
+			
+		//	System.out.println(downloadFileName+"==="+ext);
+			
+			response.setContentType(mimeType);
+			response.setContentLength((int) downloadFile.length());
+			
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"",
+					downloadFileName);
+
+			//System.out.println(headerKey+"---"+headerValue);
+			
+			response.setHeader(headerKey, headerValue);
+
+			OutputStream outStream = null;
+			try {
+				byte[] buffer = new byte[BUFFER_SIZE];
+				int bytesRead = -1;
+				outStream = response.getOutputStream();
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outStream.write(buffer, 0, bytesRead);
+				}
+
+				inputStream.close();
+				outStream.close();
+			} catch (IOException e) {
+				//e.printStackTrace();
+	                        logger.error(e);
+			}
+
+			
+			//return new ModelAndView("list");
+		} catch (Exception e) {
+                        logger.error(e);
+			//return new ModelAndView("500");
+		}
+	}
+	
+	@RequestMapping(value = "/scsvform", method = RequestMethod.GET)
+	public ModelAndView testSCSVForm() {
+		return new ModelAndView("testCSV");
+	}
+	
+	@RequestMapping(value = "/testSCSV", method = RequestMethod.GET)
+
+	public void testSCSV(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			
+			//profileService.listProfessionalProfile("2016");
+			ApplicantCSVBean a = new ApplicantCSVBean(); 
+			
+			
+			//a.setBranch(true);
+			//a.setMobileNo(true);
+			
+			//String company = "JP Morgan";
+			//String year = "2016";
+			String[] columns = request.getParameterValues("columns");
+			
+			for(String i:columns){
+				switch(i){
+				
+				case "BRANCH":
+					a.setBranch(true);
+					break;
+					
+				case "EMAIL":
+					a.setEmailId(true);
+					break;
+					
+				case "CONTACT":
+					a.setMobileNo(true);
+					break;
+					
+				case "SSC":
+					a.setSsc_per(true);
+					break;
+					
+				case "HSC":
+					a.setHscOrDip(true);
+					break;
+					
+				case "CGPA":
+					a.setDeg(true);
+					break;
+					
+				case "CORRESPONDENCE ADDRESS":
+					a.setCorrespondenceAddress(true);
+					break;
+					
+				default:
+					System.out.println("NO MATCH");
+					break;
+				}
+			}
+			
+			String company = request.getParameter("companyname");			
+			String year = request.getParameter("year");
+			
+			
+			System.out.println(" >"+a.getBranch()+" ->"+company);
+			
+			
+			scsvService.generateSCSV(
+					a,
+					new LinkedList<List<String>>(),
+					crudService.retreiveDetails(company, year));
+			
+			
+	        
+			ServletContext context = request.getServletContext();
+
+			File downloadFile = new File(csvService.download());
+			FileInputStream inputStream = null;
+			try {
+				inputStream = new FileInputStream(downloadFile);
+			} catch (FileNotFoundException e) {
+				//e.printStackTrace();
+	                        logger.error(e);
+			}
+			String mimeType = context.getMimeType(csvService.download());
+			
+			//System.out.println(mimeType);
+			
+			if (mimeType == null) {
+				mimeType = "application/octet-stream";
+			}
+			
+			String downloadFileName = downloadFile.getName();
+			//String ext = downloadFileName.substring(downloadFileName.lastIndexOf("."));
+			
+		//	System.out.println(downloadFileName+"==="+ext);
+			
+			response.setContentType(mimeType);
+			response.setContentLength((int) downloadFile.length());
+			
+			String headerKey = "Content-Disposition";
+			String headerValue = String.format("attachment; filename=\"%s\"",
+					downloadFileName);
+
+			//System.out.println(headerKey+"---"+headerValue);
+			
+			response.setHeader(headerKey, headerValue);
+
+			OutputStream outStream = null;
+			try {
+				byte[] buffer = new byte[BUFFER_SIZE];
+				int bytesRead = -1;
+				outStream = response.getOutputStream();
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outStream.write(buffer, 0, bytesRead);
+				}
+
+				inputStream.close();
+				outStream.close();
+			} catch (IOException e) {
+				//e.printStackTrace();
+	                        logger.error(e);
+			}
+
+			
+			//return new ModelAndView("list");
+		} catch (Exception e) {
+                        logger.error(e);
+			//return new ModelAndView("500");
+		}
 	}
 }

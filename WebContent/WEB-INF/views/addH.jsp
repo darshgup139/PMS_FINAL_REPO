@@ -55,4 +55,47 @@ IT:<BR>
 
 </body>
 
+<h1>Interested in higher studies details</h1>
+Year:<BR>
+<input type="text" name="year" value="${ihs.year}"><BR>
+<BR>
+
+Comps:<BR>
+<input type="text" name="comps" value="${ihs.comps}"><BR>
+<BR>
+Elex:<BR>
+<input type="text" name="elex" value="${ihs.elex}"><BR>
+<BR>
+
+Prod:<BR>
+<input type="text" name="prod" value="${ihs.prod}"><BR><BR>
+
+IT:<BR>
+<input type="text" name="it" value="${ihs.year}">
+<BR><BR>
+
+
+<h1>Internship Placed:</h1>
+Year:<BR>
+<input type="text" name="years" value="${ips.year}"><BR>
+<BR>
+
+Comps:<BR>
+<input type="text" name="compss" value="${ips.comps}"><BR>
+<BR>
+Elex:<BR>
+<input type="text" name="elexs" value="${ips.elex}"><BR>
+<BR>
+
+Prod:<BR>
+<input type="text" name="prods" value="${ips.prod}"><BR><BR>
+
+IT:<BR>
+<input type="text" name="its" value="${ips.it}">
+<BR><BR>
+<input type="submit" value="Submit"/>
+</form>
+
+</body>
+
 </html>

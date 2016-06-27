@@ -240,7 +240,8 @@ description: contains Fields to edit  student profile -->
 																			</p>
 																		</div>
 
-																		<input type="submit" value="Submit" />
+																			<!--<input type="submit" value="submit"/>-->
+																		<input type="submit" class="btn btn-md btn-block btn-pink" value="Update Profile"/>
 
 
 																		<div class="profile-skills"></div>
@@ -278,7 +279,7 @@ description: contains Fields to edit  student profile -->
 		<!-- /.page-content -->
 
 
-	</div>
+	
 
 
 	<!-- inline scripts related to this page -->

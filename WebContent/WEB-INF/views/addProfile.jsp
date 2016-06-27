@@ -24,50 +24,52 @@ description: contains all the validations required for every field -->
 <link rel="stylesheet" href="assets/css/fullcalendar.min.css" />
 
 </head>
-<body 	onload="noBack();"
-    onpageshow="if (event.persisted) noBack();" onunload="">
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();"
+	onunload="">
 	<jsp:directive.include file="Header.jsp" />
 
 	<div class="main-content">
-				<div class="main-content-inner">
-					<div class="breadcrumbs" id="breadcrumbs">
+		<div class="main-content-inner">
+			<div class="breadcrumbs" id="breadcrumbs">
 
 				<jsp:directive.include file="searchheader.jsp" />
 			</div>
 
-					<div class="page-content">
-						
+			<div class="page-content">
 
-						<div class="page-header">
 
-					<h1>
-						Job Details
-					</h1>
-					
+				<div class="page-header">
+
+					<h1>Job Details</h1>
+
 					<c:if test="${success==1}">
-						<p color="blue"><h2>Profile added successfully!!</h2></p>
+						<p color="blue">
+						<h2>Profile added successfully!!</h2>
+						</p>
 					</c:if>
-					
-					<br/>
+
+					<br />
 					<c:if test="${job==1}">
-						<p color="green"><h2>Job Details not filled</h2></p>
+						<p color="green">
+						<h2>Job Details not filled</h2>
+						</p>
 					</c:if>
 
 
 				</div>
 				<!-- /.page-header -->
 				<div class="alert alert-danger">
-					<i class="ace-icon fa fa-hand-o-right"></i> Please note: In
-					some cases if the values aren't filled or changed, the default values in the
-					field will be considered.
-					
+					<i class="ace-icon fa fa-hand-o-right"></i> Please note: In some
+					cases if the values aren't filled or changed, the default values in
+					the field will be considered.
+
 					<button class="close" data-dismiss="alert">
 						<i class="ace-icon fa fa-times"></i>
 					</button>
 				</div>
-				
-						<font size="5" color="red" face="verdana">${errorMesg}</font>
-				
+
+				<font size="5" color="red" face="verdana">${errorMesg}</font>
+
 				<div class="row">
 					<div class="col-xs-12">
 						<!-- PAGE CONTENT BEGINS -->
@@ -79,426 +81,406 @@ description: contains all the validations required for every field -->
 
 									<div class="tab-content no-border padding-24">
 										<div id="home" class="tab-pane in active">
-										<div  role="form" id="validation-form"  >
-											<form  method="post" action="saveProfile">
-										
-												<div class="col-xs-12">
+											<div role="form" id="validation-form">
+												<form method="post" action="saveProfile">
 
-													<div class="row">
-														
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="name">Company Name</label>
+													<div class="col-xs-12">
 
-															<div class="col-sm-3">
-																<div class="clearfix">
-																	<select name="company_id" class="chosen-select">
-																	<!-- <option ></option>
-																		<option value="2">Jp Morgan</option>
-																		<option value="4">Direct-I</option>
-																		<option value="6">Morgan Stanley</option>
-																		<option value="5">Godrej</option>
-																		<option value="3">TCS</option>
-																		<option value="8">Accenture</option>
-																		<option value="7">L&T Infotech</option>
-																		<option value="1">ZS</option> -->
-																		<c:forEach items="${companies}" var="companies">
-                        												<option value="${companies.key}">${companies.value}</option>
-                  													</c:forEach>
+														<div class="row">
 
-																	</select>
-																</div>
+															<div class="form-group">
+																<label class="col-sm-1 control-label no-padding-right"
+																	for="name">Company Name</label>
 
-															</div>
-														</div>
-														
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="documents">Documents Required</label>
+																<div class="col-sm-3">
+																	<div class="clearfix">
+																		<select name="company_id" class="chosen-select">
 
-															<div class="col-sm-3">
-																<div class="inline">
-																	<input type="text" name="docs_required" id="form-field-tags2"
-																		placeholder="Enter the documents" />
-																</div>
-															</div>
-														</div>
-														<div class="form-group">
+																			<c:forEach items="${companies}" var="companies">
+																				<option value="${companies.key}">${companies.value}</option>
+																			</c:forEach>
 
-
-															<label class="col-sm-1 control-label no-padding-right"
-																for="comment1">Job Description</label>
-															<div class="col-sm-3">
-																<div class="clearfix">
-																	<textarea class="autosize-transition form-control"
-																		name="job_description" id="comment1"></textarea>
-																</div>
-															</div>
-
-														</div>
-
-													</div>
-													<!-- /.row -->
-												</div>
-												<div class="col-xs-12">
-
-													<div class="row">
-														
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="ctc">C.T.C</label>
-															<div class="col-sm-3">
-																<div>
-																	<input type="text" id="spinner1" name="ctc"/>
-																	<div class="space-6"></div>
-
-																</div>
-															</div>
-														</div>
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="skills">Skills Required</label>
-
-															<div class="col-sm-3">
-																<div class="inline">
-																	<input type="text" name="skills_required" id="form-field-tags"
-																		placeholder="Enter the skills" />
-																</div>
-															</div>
-														</div>
-														<div class="form-group">
-
-
-															
-															
-															
-															<label class="col-sm-1 control-label no-padding-right"
-																for="jobcategory">Job Category</label>
-															<div class="col-sm-2">
-
-																<div>
-
-																	<select name="job_category" class="chosen-select">
-																	<option ></option>
-																		<option value="Non Dream">NonDream</option>
-																		<option value="Dream">Dream</option>
-																		<option value="SD">SuperDream</option>
-
-																	</select>
-																</div>
-
-															</div>
-
-														</div>
-
-
-
-													</div>
-													<!-- /.row -->
-												</div>
-
-												<div class="col-xs-12">
-
-													<div class="row">
-													<div class="form-group">
-
-
-
-														</div>
-												
-														<div class="form-group">
-
-	
-														<div class="form-group">
-
-
-															<label class="col-sm-1 control-label no-padding-right"
-																for="drivedate">Drive Date</label>
-															<div class="col-sm-3">
-																<div class="input-group input-group-sm">
-																	<input name="drive_date" type="text" id="datepicker2"
-																		class="form-control" /> <span
-																		class="input-group-addon"> <i
-																		class="ace-icon fa fa-calendar"></i>
-																	</span>
-													
-																</div>
-
-															</div>
-
-														</div>
-													</div>
-													<!-- /.row -->
-												</div>
-												<div class="col-xs-12">
-
-													
-												<div class="hr hr-8 dotted"></div>
-												<div class="page-header">
-
-													<h1>
-														Job Criteria
-													</h1>
-
-												</div>
-												<!-- /.page-header -->
-												<div class="col-xs-12">
-
-													<div class="row">
-														 <div class="form-group">
-														
-														</div> 
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="eligiblebranches">Eligible Branches</label>
-															<div class="col-sm-4">
-																<div>
-																	<select name="eligible_branches" class="chosen-select form-control"
-																		multiple="Eligible Branches">
-																		<option value="CS">Computers</option>
-																		<option value="IT">Info.Tech</option>
-																		<option value="EX">Electronics</option>
-																		<option value="PD">Production</option>
-
-																	</select>
-																</div>
-															</div>
-														</div>
-														<div class="form-group">
-
-
-															<label class="col-sm-1 control-label no-padding-right"
-																for="yop">Year of Passing</label>
-															<div class="col-sm-4">
-																<div>
-																	<select class="form-control" id="yop" name="year_of_passing">
-																		<option value=""></option>
-																		<option value="2017">2017</option>
-																		<option value="2018">2018</option>
-																		<option value="2019">2019</option>
-																		<option value="2020">2020</option>
-																		<option value="2021">2021</option>
-																		<option value="2022">2022</option>
-																		<option value="2023">2023</option>
-																		<option value="2024">2024</option>
-																	</select>
-																</div>
-															</div>
-														</div>
-													</div>
-													<!-- /.row_1 -->
-												</div>
-												<div class="col-xs-12">
-
-													<div class="row">
-														<div class="form-group">
-
-
-
-
-															<div class="widget-body">
-
-
-
-																<label class="col-sm-1 control-label no-padding-right">HSC
-																	Percentage</label>
-																<div class="col-sm-2">
-																	<div class="knob-container inline">
-																		<input type="text" class="input-small knob" value="40"
-																			data-min="0" data-max="100" data-step="0.01"
-																			data-width="120" data-height="120"
-																			data-thickness="0.3" data-fgcolor="#b723df" name="hsc_or_dip_percentage" />
+																		</select>
 																	</div>
 
 																</div>
-																<label class="col-sm-1 control-label no-padding-center">SSC
-																	Percentage</label>
+															</div>
+															<div class="form-group">
+																<label class="col-sm-1 control-label no-padding-right"
+																	for="documents">Documents Required</label>
+
+																<div class="col-sm-3">
+																	<div class="inline">
+																		<input type="text" name="docs_required"
+																			id="form-field-tags2"
+																			placeholder="Enter the documents" />
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+
+
+																<label class="col-sm-1 control-label no-padding-right"
+																	for="comment1">Job Description</label>
+																<div class="col-sm-3">
+																	<div class="clearfix">
+																		<textarea class="autosize-transition form-control"
+																			name="job_description" id="comment1"></textarea>
+																	</div>
+																</div>
+
+															</div>
+
+														</div>
+														<!-- /.row -->
+													</div>
+													<div class="col-xs-12">
+
+														<div class="row">
+
+															<div class="form-group">
+																<label class="col-sm-1 control-label no-padding-right"
+																	for="ctc">C.T.C</label>
+																<div class="col-sm-3">
+																	<div>
+																		<input type="text" id="spinner1" name="ctc" />
+																		<div class="space-6"></div>
+
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<label class="col-sm-1 control-label no-padding-right"
+																	for="skills">Skills Required</label>
+
+																<div class="col-sm-3">
+																	<div class="inline">
+																		<input type="text" name="skills_required"
+																			id="form-field-tags" placeholder="Enter the skills" />
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+
+
+
+
+
+																<label class="col-sm-1 control-label no-padding-right"
+																	for="jobcategory">Job Category</label>
 																<div class="col-sm-2">
 
-																	<div class="knob-container inline">
-																		<input type="text" class="input-small knob" value="40"
-																			data-min="0" data-max="100" data-step="0.01"
-																			data-width="120" data-height="120"
-																			data-thickness=".3" data-fgcolor="#f42458" name="ssc_percentage" />
-																	</div>
+																	<div>
 
-																</div>
+																		<select name="job_category" class="chosen-select">
+																			<option></option>
+																			<option value="Non Dream">NonDream</option>
+																			<option value="Dream">Dream</option>
+																			<option value="SD">SuperDream</option>
 
-																<label class="col-sm-1 control-label no-padding-right">Percentage</label>
-																<div class="col-sm-2">
-																	<div class="knob-container inline">
-																		<input type="text" class="input-small knob" value="40"
-																			data-min="0" data-max="100" data-step="0.01"
-																			data-width="120" data-height="120"
-																			data-thickness="0.3" data-fgcolor="#2466f4" name="percentage"/>
-																	</div>
-
-																</div>
-																<label class="col-sm-1 control-label no-padding-center">CGPA</label>
-																<div class="col-sm-1">
-
-																	<div class="knob-container inline">
-																		<input type="text" class="input-small knob"
-																			value="5.0" data-min="0" data-max="10"
-																			data-step="0.01" data-width="120" data-height="120"
-																			data-thickness=".3" data-fgcolor="#47d05e" name="cgpa"/>
+																		</select>
 																	</div>
 
 																</div>
 
 															</div>
 
-														</div>
 
+
+														</div>
+														<!-- /.row -->
 													</div>
-													<!-- /.row_1 -->
-												</div>
 
-												<div class="col-xs-12">
+													<div class="col-xs-12">
 
-													<div class="row">
-														<div class="form-group">
-															<label class="col-sm-1  control-label no-padding-right"
-																for="form-field-18">No. Of Year Gaps</label>
-															
-															<div class="col-sm-3">
-																<div>
-																	<input name="year_gap_allowed" type="text" id="spinner11" />
-																	<div class="space-6"></div>
+														<div class="row">
+															<div class="form-group"></div>
+
+															<div class="form-group">
+
+
+																<div class="form-group">
+
+
+																	<label class="col-sm-1 control-label no-padding-right"
+																		for="drivedate">Drive Date</label>
+																	<div class="col-sm-3">
+																		<div class="input-group input-group-sm">
+																			<input name="drive_date" type="text" id="datepicker2"
+																				class="form-control" /> <span
+																				class="input-group-addon"> <i
+																				class="ace-icon fa fa-calendar"></i>
+																			</span>
+
+																		</div>
+
+																	</div>
+
 																</div>
 															</div>
-															
-
+															<!-- /.row -->
 														</div>
-														<div class="form-group">
-
-
-															<label class="col-sm-1 control-label no-padding-right"
-																for="lastdatetoapply">Last Date to Apply</label>
-															<div class="col-sm-3">
-																<div class="input-group input-group-sm">
-																	<input name="last_date_to_apply" type="text" id="datepicker3"
-																		class="form-control" /> <span
-																		class="input-group-addon"> <i
-																		class="ace-icon fa fa-calendar"></i>
-																	</span>															
-																
-																</div>
-															</div>
-
-														</div>
-
 													</div>
-													<!-- /.row_1 -->
-												</div>	
-												<div class="col-xs-12">
+													<div class="col-xs-12">
 
-													<div class="row">
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="form-field-18">Allow already Placed </label>
-															<div class="col-sm-3">
-																<div>
-
-																<!-- don't add value attribute!  -->
-																	<label> <input name="placed_students_allowed"
-																		class="ace ace-switch ace-switch-6" type="checkbox"/>
-
-																		<span class="lbl"></span>
-																	</label>
-																</div>
-															</div>
-
-														</div>
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="live">No of live KT's allowed </label>
-															<div class="col-sm-3">
-																<div>
-																	<input name="no_of_live_kts_allowed" type="text" id="spinner11" />
-																	<div class="space-6"></div>
-																</div>
-															</div>
-
-														</div>
-														<div class="form-group">
-															<label class="col-sm-1 control-label no-padding-right"
-																for="dead">No of dead KT's allowed </label>
-															<div class="col-sm-3">
-																<div>
-																	<input name="no_of_dead_kts_allowed" type="text" id="spinner22" />
-																	<div class="space-6"></div>
-																</div>
-															</div>
-
-														</div>
-
-														<div class="clearfix actions">
-															
-															<div class="col-md-offset-4 col-md-9">
-																<button class="btn btn-info btn-next"
-																	 type="submit">
-																	<i class="ace-icon fa fa-check bigger-110"></i>
-																	Submit 
-																</button>
-																<!-- <input type="submit" value="Submit"> -->
-
-															</div>
-														</div>
 
 														<div class="hr hr-8 dotted"></div>
+														<div class="page-header">
+
+															<h1>Job Criteria</h1>
+
 														</div>
-											</form>
+													</div>
+														<!-- /.page-header -->
+														<div class="col-xs-12">
+
+															<div class="row">
+																<div class="form-group"></div>
+																<div class="form-group">
+																	<label class="col-sm-1 control-label no-padding-right"
+																		for="eligiblebranches">Eligible Branches</label>
+																	<div class="col-sm-4">
+																		<div>
+																			<select name="eligible_branches"
+																				class="chosen-select form-control"
+																				multiple="Eligible Branches">
+																				<option value="CS">Computers</option>
+																				<option value="IT">Info.Tech</option>
+																				<option value="EX">Electronics</option>
+																				<option value="PD">Production</option>
+
+																			</select>
+																		</div>
+																	</div>
+																</div>
+																<div class="form-group">
+
+
+																	<label class="col-sm-1 control-label no-padding-right"
+																		for="yop">Year of Passing</label>
+																	<div class="col-sm-4">
+																		<div>
+																			<select class="form-control" id="yop"
+																				name="year_of_passing">
+																				<option value=""></option>
+																				<option value="2017">2017</option>
+																				<option value="2018">2018</option>
+																				<option value="2019">2019</option>
+																				<option value="2020">2020</option>
+																				<option value="2021">2021</option>
+																				<option value="2022">2022</option>
+																				<option value="2023">2023</option>
+																				<option value="2024">2024</option>
+																			</select>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!-- /.row_1 -->
+														</div>
+														<div class="col-xs-12">
+
+															<div class="row">
+																<div class="form-group">
+
+
+
+
+																	<div class="widget-body">
+
+
+
+																		<label class="col-sm-1 control-label no-padding-right">HSC
+																			Percentage</label>
+																		<div class="col-sm-2">
+																			<div class="knob-container inline">
+																				<input type="text" class="input-small knob"
+																					value="40" data-min="0" data-max="100"
+																					data-step="0.01" data-width="120" data-height="120"
+																					data-thickness="0.3" data-fgcolor="#b723df"
+																					name="hsc_or_dip_percentage" />
+																			</div>
+
+																		</div>
+																		<label
+																			class="col-sm-1 control-label no-padding-center">SSC
+																			Percentage</label>
+																		<div class="col-sm-2">
+
+																			<div class="knob-container inline">
+																				<input type="text" class="input-small knob"
+																					value="40" data-min="0" data-max="100"
+																					data-step="0.01" data-width="120" data-height="120"
+																					data-thickness=".3" data-fgcolor="#f42458"
+																					name="ssc_percentage" />
+																			</div>
+
+																		</div>
+
+																		<label class="col-sm-1 control-label no-padding-right">Percentage</label>
+																		<div class="col-sm-2">
+																			<div class="knob-container inline">
+																				<input type="text" class="input-small knob"
+																					value="40" data-min="0" data-max="100"
+																					data-step="0.01" data-width="120" data-height="120"
+																					data-thickness="0.3" data-fgcolor="#2466f4"
+																					name="percentage" />
+																			</div>
+
+																		</div>
+																		<label
+																			class="col-sm-1 control-label no-padding-center">CGPA</label>
+																		<div class="col-sm-1">
+
+																			<div class="knob-container inline">
+																				<input type="text" class="input-small knob"
+																					value="5.0" data-min="0" data-max="10"
+																					data-step="0.01" data-width="120" data-height="120"
+																					data-thickness=".3" data-fgcolor="#47d05e"
+																					name="cgpa" />
+																			</div>
+
+																		</div>
+
+																	</div>
+
+																</div>
+
+															</div>
+															<!-- /.row_1 -->
+														</div>
+
+														<div class="col-xs-12">
+
+															<div class="row">
+																<div class="form-group">
+																	<label class="col-sm-1  control-label no-padding-right"
+																		for="form-field-18">No. Of Year Gaps</label>
+
+																	<div class="col-sm-3">
+																		<div>
+																			<input name="year_gap_allowed" type="text"
+																				id="spinner11" />
+																			<div class="space-6"></div>
+																		</div>
+																	</div>
+
+
+																</div>
+																<div class="form-group">
+
+
+																	<label class="col-sm-1 control-label no-padding-right"
+																		for="lastdatetoapply">Last Date to Apply</label>
+																	<div class="col-sm-3">
+																		<div class="input-group input-group-sm">
+																			<input name="last_date_to_apply" type="text"
+																				id="datepicker3" class="form-control" /> <span
+																				class="input-group-addon"> <i
+																				class="ace-icon fa fa-calendar"></i>
+																			</span>
+
+																		</div>
+																	</div>
+
+																</div>
+
+															</div>
+															<!-- /.row_1 -->
+														</div>
+														<div class="col-xs-12">
+
+															<div class="row">
+																<div class="form-group">
+																	<label class="col-sm-1 control-label no-padding-right"
+																		for="form-field-18">Allow already Placed </label>
+																	<div class="col-sm-3">
+																		<div>
+
+																			<!-- don't add value attribute!  -->
+																			<label> <input name="placed_students_allowed"
+																				class="ace ace-switch ace-switch-6" type="checkbox" />
+
+																				<span class="lbl"></span>
+																			</label>
+																		</div>
+																	</div>
+
+																</div>
+																<div class="form-group">
+																	<label class="col-sm-1 control-label no-padding-right"
+																		for="live">No of live KT's allowed </label>
+																	<div class="col-sm-3">
+																		<div>
+																			<input name="no_of_live_kts_allowed" type="text"
+																				id="spinner11" />
+																			<div class="space-6"></div>
+																		</div>
+																	</div>
+
+																</div>
+																<div class="form-group">
+																	<label class="col-sm-1 control-label no-padding-right"
+																		for="dead">No of dead KT's allowed </label>
+																	<div class="col-sm-3">
+																		<div>
+																			<input name="no_of_dead_kts_allowed" type="text"
+																				id="spinner22" />
+																			<div class="space-6"></div>
+																		</div>
+																	</div>
+
+																</div>
+
+																<div class="clearfix actions">
+
+																	<div class="col-md-offset-4 col-md-9">
+																		<button class="btn btn-info btn-next" type="submit">
+																			<i class="ace-icon fa fa-check bigger-110"></i>
+																			Submit
+																		</button>
+																		<!-- <input type="submit" value="Submit"> -->
+
+																	</div>
+																</div>
+
+																<div class="hr hr-8 dotted"></div>
+															</div>
+												</form>
 											</div>
 
-										<!-- /.row_1 -->
+											<!-- /.row_1 -->
+										</div>
+
+										<div class="hr hr-8 dotted"></div>
+
+										<div class="space-20"></div>
+
 									</div>
-
-									<div class="hr hr-8 dotted"></div>
-
-									<div class="space-20"></div>
+									<!-- /#home -->
 
 								</div>
-								<!-- /#home -->
-
 							</div>
 						</div>
+
+
 					</div>
+
+
+
+
+
 				</div>
 
-						
-						
-						
-						
-					</div>
-				</div>
-												
 
+			</div>
+		</div>
 
-	
-		<jsp:directive.include file="scripts.jsp" />
-		
-	
-	
-		<!-- /.main-container -->
-
-
-	<!--[if !IE]> -->
-	<script src="assets/js/jquery.2.1.1.min.js"></script>
+	</div>
 
 
 
 
-	<!-- basic scripts -->
-
-	<!--[if !IE]> -->
-	<script src="assets/js/jquery.2.1.1.min.js"></script>
-
-	<!-- <![endif]-->
-
-	<!--[if IE]>
-<script src="assets/js/jquery.1.11.1.min.js"></script>
-<![endif]-->
 
 	<!--[if !IE]> -->
 	<script type="text/javascript">
@@ -520,7 +502,6 @@ description: contains all the validations required for every field -->
 					.write("<script src='assets/js/jquery.mobile.custom.min.js'>"
 							+ "<"+"/script>");
 	</script>
-	<script src="assets/js/bootstrap.min.js"></script>
 
 	<!-- page specific plugin scripts -->
 
@@ -1361,7 +1342,7 @@ description: contains all the validations required for every field -->
 									job_description : {
 										required : true,
 									},
-									company_id: {
+									company_id : {
 										required : true,
 									}
 								},
@@ -1382,7 +1363,7 @@ description: contains all the validations required for every field -->
 									skills_required : "Please enter atleast one skill",
 									company_id : "Please Enter the Company name",
 									docs_required : "Please Enter the Document to be carried",
-									job_description:"Please Enter the Job Description",
+									job_description : "Please Enter the Job Description",
 									ctc : "Please Enter a C.T.C",
 									createddate : "Please Enter a Valid Date",
 									modifieddate : "Please Enter a Valid Date",
@@ -1450,6 +1431,5 @@ description: contains all the validations required for every field -->
 
 		})
 	</script>
-
 </body>
 </html>

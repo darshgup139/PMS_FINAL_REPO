@@ -34,6 +34,5 @@ String it,prod,elex,comps;
 		this.year = year;
 	}
 
-	  
-	    
 }
+	    

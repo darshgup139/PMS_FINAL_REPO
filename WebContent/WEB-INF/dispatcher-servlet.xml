@@ -24,6 +24,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<mvc:resources location="/WEB-INF/assets/" mapping="/assets/**" /> 
 
  
+
 	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
 	
 	<context:component-scan base-package="org.crce.interns" />
@@ -64,6 +65,16 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 		<property name="file" value="/WEB-INF/database.xml" />
 	</bean>
 		
+		
+	<bean id="ap"
+		class="org.crce.interns.beans.CSVReader">
+		<property name="file" value="/WEB-INF/applicant.csv" />
+	</bean>
+	
+	<bean id="bp"
+		class="org.crce.interns.beans.SCSVReader">
+		<property name="file" value="/WEB-INF/applicant.scsv" />
+	</bean>
 	
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
