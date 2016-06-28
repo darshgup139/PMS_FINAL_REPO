@@ -155,36 +155,7 @@
 
 
 
-										<!-- <div id="activity" class="tab-pane in active">
-													 <div class="row ">
-														
-														
-														 <br>
-													 
-														<div class="col-xs-12 col-sm-4 left">
-															
-															  <a href="addProfile"  class="btn btn-purple btn-lg btn-block">Add job Profile </a> <br><br>
-
-															<a href="getEventForm.html"  class="btn btn-inverse btn-lg btn-block">Add Event </a> <br><br>
-																<a href="addUser"  class="btn btn-warning btn-lg btn-block">Manage different users of System</a>
-
-														</div>
 										
-														
-														&nbsp;&nbsp;<div class="col-xs-12 col-sm-4 right" >
-														  
-														  <a href="manage.html" class="btn btn-purple btn-lg btn-block">Add/Delete candidate </a> <br><br>
-														  <a href="GroupSendMail"  class="btn btn-inverse btn-lg btn-block">Send Group Email </a><br><br>
-														  <a href="personalMail"  class="btn btn-warning btn-lg btn-block">Send Personal Email </a><br><br>
-														</div>
-														
-												<div class="col-xs-12 col-sm-8 left">
-														<a href="addUser"  class="btn btn-warning btn-lg btn-block">Manage different users of System</a> <br><br>	
-												</div>
-											</div>/#pictures
-											</div>
-								
-							 -->
 
 									</div>
 									<!-- end of tabbable -->

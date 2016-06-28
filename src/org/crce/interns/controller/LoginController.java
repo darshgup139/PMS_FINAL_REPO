@@ -42,9 +42,9 @@ public class LoginController{
    	//----------------------------------------------------------------------------------------------------------
 	
 
-	
-	@RequestMapping("/")
-
+    /*@RequestMapping("/")*/
+	@RequestMapping("/login")
+	//changed by Gaurav - made home.jsp the default page and added a link to direct to this page with mapping '\login'
 	public ModelAndView welcome() throws ParseException {
 		
 		try{
@@ -218,11 +218,31 @@ public class LoginController{
 		model.addObject("exception", "Logged page");
 		return model;
 	}
-}
+	
+	
+	}
+	
+	
 	
 
    	//----------------------------------------------------------------------------------------------------------	
-
+	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+        public @ResponseBody String searchCombined(@RequestBody String data, HttpServletRequest request,
+		HttpServletResponse response) throws IOException{
+            System.out.println("Here");
+            System.out.println("Username fetched from PHP is "+data);
+            data = data.replace("\"", "").replace("\"", "");
+            System.out.println(data.getClass());
+            HttpSession s=request.getSession(true);
+            s.setAttribute("userName", data);
+            System.out.println(s.getAttribute("userName"));
+            return "1";
+            //switchServers(s);
+            //request.getSession().getAttribute("userName", data );
+            //System.out.println(request.getParameter("userName"));
+            //System.out.println(request.toString());
+            //sssssreturn "logged";
+        }
 
 	
    	//----------------------------------------------------------------------------------------------------------

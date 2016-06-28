@@ -24,6 +24,7 @@ import org.crce.interns.beans.UserDetailsBean;
 import org.crce.interns.model.Company;
 import org.crce.interns.model.PersonalProfile;
 import org.crce.interns.service.CheckRoleService;
+import org.crce.interns.service.ConstantValues;
 import org.crce.interns.service.ProfileService;
 import org.crce.interns.service.SearchService;
 
@@ -41,7 +42,7 @@ import com.google.gson.Gson;
 import org.apache.log4j.Logger;
 
 @Controller
-public class UpdateProfileController {
+public class UpdateProfileController implements ConstantValues {
 
 	@Autowired
 	private ProfileService profileService;
@@ -88,19 +89,30 @@ public class UpdateProfileController {
 
 			userDetailsBean.setUserName(userName);
 			userDetailsBean = profileService.getProfile(userDetailsBean);
-
+			
 			userDetailsBean.setAccountActive("YES");
 			userDetailsBean.setCurrentState("online");
 			userDetailsBean.setLastLogin(new Date());
 			userDetailsBean.setModifiedBy(userDetailsBean.getUserName());
-			userDetailsBean.setModifiedDate(new Date());
+			userDetailsBean.setModifiedDate(new Date());			
 
 			professionalProfileBean.setUserName(userName);
+			professionalProfileBean = profileService.getProfile(professionalProfileBean);
+			
 			personalProfileBean.setUserName(userName);
 
 			userDetailsBean = profileService.updateUserDetails(userDetailsBean);
+			
+			if(profileService.check(userName)){
+				professionalProfileBean.setStatus(PLACED);
+				professionalProfileBean = profileService.updateProfessionalProfile(professionalProfileBean);
+			}
+			else{
+				professionalProfileBean.setStatus(NOT_PLACED);
+				professionalProfileBean = profileService.updateProfessionalProfile(professionalProfileBean);
+			}
 
-			professionalProfileBean = profileService.getProfile(professionalProfileBean);
+			
 			personalProfileBean = profileService.getProfile(personalProfileBean);
 
 			request.getSession(true).setAttribute("name", personalProfileBean.getName());
@@ -393,6 +405,8 @@ public class UpdateProfileController {
 			ProfessionalProfileBean professionalProfileBean = new ProfessionalProfileBean();
 			PersonalProfileBean personalProfileBean = new PersonalProfileBean();
 
+			
+			
 			userDetailsBean.setUserName(userName);
 			professionalProfileBean.setUserName(userName);
 			personalProfileBean.setUserName(userName);
@@ -482,6 +496,8 @@ public class UpdateProfileController {
 	public @ResponseBody String placedStatus(HttpServletRequest request) {
 		
 		String u = (String) request.getSession(true).getAttribute("userName");
+		
+		ProfessionalProfileBean professionalProfileBean = new ProfessionalProfileBean();
 		
 		
 		

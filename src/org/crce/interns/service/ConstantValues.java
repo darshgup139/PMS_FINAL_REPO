@@ -162,6 +162,7 @@ public interface ConstantValues {
 
 	// STUDENT PLACEMENT STATUS
 	public String PLACED = "Placed";
+	public String NOT_PLACED = "Not Placed";
 	public String DREAM ="Dream";
 	public String NONDREAM ="Nondream";
 	public String ALLOWED ="Yes";

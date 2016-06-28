@@ -71,4 +71,8 @@ public class MainController {
 	public String about_us() {
 		return "about_us";
 	}
+	@RequestMapping("/")
+	public String homepage() {
+		return "home";
+	}
 }
